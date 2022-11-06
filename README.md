@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -46,18 +45,19 @@ login()
 
             {
                 printf("\nSuccessful Login\n");
+                printf("Please have Patience! We are developing the site!");
+                break;
             }
         else
             {
                 printf("\nIncorrect Login Details\nPlease enter the correct credentials\n");
+                login();
+                break;
             }
 }
-
 fclose(data);
-
 }
-create_profile()
-{
+create_profile(){
     char name[15];
     FILE *data;
     data=fopen("data.txt","w");
@@ -85,30 +85,36 @@ create_profile()
     printf("\n\n\n\t Your Information: \n\n\n");
 
     int i=0, j=0, length=0;
-    while(create.first_name[i]!='\0')
-    {
-        i++;
-        length++;
+
+    while(create.first_name[length]!='\0'){
+        ++length;
     }
-    while(create.last_name[j]!='\0')
-    {
-        create.first_name[length+j] = create.last_name[j+1];
-        j++;
+    for(i=0; create.last_name[i]!= '\0'; ++i, ++length){
+        create.first_name[length]= create.last_name[i];
     }
-    printf("\n\n\n\tName: %s\n",create.first_name);
+            create.first_name[length]= '\0';
+
+    printf("\n\n\nName: ");
+    puts(create.first_name);
     printf("\n\n\tID: %s\n",create.ID);
     printf("\n\n\tMobile Number: %s\n",create.number);
     printf("\n\n\tEmail: %s\n",create.email);
 
-    printf("\nPress Enter Key to Confirm details...\n\n\n");
-    getchar();
     system("CLS");
+    coordinate(15,10);
+    int option;
+    printf("Enter 1 to Save info or 2 to Cancel: ");
+    scanf("%d",&option);
 
+    if(option==1)
+    {
+        getchar();
+    system("CLS");
     coordinate(15,5);
 
-    printf("\n\n\nWelcome");
+    printf("\n\n\nWelcome %s! Your information have been Saved!",create.first_name);
     printf("\n\n\n\tSet Username & Password: ");
-    printf("\nEnter Username:\n");
+    printf("\n\nEnter Username:\n");
     scanf("%s",create.user_name);
     printf("\nEnter Password:\n");
     scanf("%s",create.password);
@@ -118,28 +124,88 @@ create_profile()
 
     printf("\nRegistration Successful!\n");
     printf("Press 'ENTER' key to continue...");
+    }
+    else if(option==2)
+    {
         getchar();
     system("CLS");
-
+    coordinate(15,10);
     main();
-    //login();
+    }
+    else
+        printf("Wrong Choice!");
+   system("CLS");
+   coordinate(15,10);
+    int choice;
+    printf("Enter 1 to go to 'Main Menu' or Enter 2 to go to 'Login'\n\n");
+    scanf("%d",&choice);
+    if(choice==1)
+    {
+        getchar();
+    system("CLS");
+    coordinate(15,10);
+    main();
+    }
+    if(choice==20)
+       {
+           getchar();
+    system("CLS");
+    coordinate(15,10);
+    login();
+       }
 }
-
-
 int main(){
     system("COLOR 70");
-    int option;
+    int choice,option;
     coordinate(15,10);
-    printf("Choose Your option:  \n 1. Register \n 2. Log In\n");
-    scanf("%d",&option);
-    if(option == 1)
+    printf("Choose Your option:  \n 1. User \n 2. Admin\n\n");
+    scanf("%d",&choice);
+            system("CLS");
+
+            coordinate(15,10);
+    switch(choice)
+    {
+    case 1:
+        printf("Choose Your Option: \n\n 1. Create Profile \n 2. Log in\n\n");
+        scanf("%d",&option);
+        switch(option)
         {
+        case 1:
+             {
             system("CLS");
             create_profile();
         }
-    else if(option == 2)
-        {
+        break;
+        case 2:
+            {
+                 {
             system("CLS");
             login();
         }
-}
+            }
+            break;
+        }
+        break;
+        case 2:
+            {
+                printf("Admin Access is Under Development\n\n");
+                int back;
+                printf("Choose 1 to go back or Press Any Key to EXIT!\n");
+                scanf("%d",&back);
+                switch(back)
+                {
+                case 1:
+                    {
+                        system("CLS");
+                        coordinate(15,10);
+                    main();
+                    }
+                default:
+                    return 0;
+                }
+            break;
+            }
+        default:
+            printf("Wrong Option!");
+        }
+    }
