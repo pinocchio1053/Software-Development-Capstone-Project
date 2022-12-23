@@ -37,16 +37,15 @@ loader(){
     system("CLS");
     coordinate(15,5);
 
-    printf("\n\n\n\n\t\t\tLoading...\n");
+    printf("\n\n\n\n\t\t\t    Loading...\n\n");
     printf("\t");
     for(i=0;i<50;i++)
     {
-        Sleep(20);
+        Sleep(30);
         printf("%c",219);
     }
-    system("cls");
-    coordinate(15,5);
-    printf("\n\tPlease Press Any key to Continue!\n\n");
+    printf("\n\n\n\t\tSuccessfully Loaded!");
+    printf("\n\t\tPlease Press Any key to Continue!");
     getch();
     system("CLS");
 }
@@ -94,11 +93,10 @@ login(){
 
     printf("\n\t\t\t\t\tUsername:  ");
     scanf("%s",&username);
-    printf("\n\t\t\t\t\tPassword: ");
+    printf("\t\t\t\t\tPassword: ");
     scanf("%s",&password);
 
     if (NULL == data) {
-            loader();
         printf("\n\nNo Information Available!\n Create an Account!\n");
         printf("Press Any Key to Go Main Menu!\n");
         getch();
@@ -108,17 +106,20 @@ while(fread(&create,sizeof(create),1,data)){
     if(strcmp(username,create.user_name)==0 && strcmp(password,create.password)==0)
         {
             loader();
-            printf("\nSuccessful Login\n");
-            printf("Press Any Key to go to HOME!\n");
+            coordinate(20,5);
+            printf("\n\t\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**");
+            printf("\n\t\t\t          *         Successful Login        *");
+            printf("\n\t\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**");
+            printf("\n\t\t\t            Press Any Key to go to HOME!   ");
             getch();
             home();
             break;
         }
     else
         {
-            printf("\nIncorrect Login Details\nPlease enter 1 to try to Login again or Enter 2 to go Main Menu !\n");
+            printf("\n\n\n\n\t\t\t\t\tIncorrect Login Details\n\t\t\tPlease enter 1 to try to Login again or Enter 2 to go Main Menu !\n");
             int choice;
-            printf("\n\t\t\tEnter Choice::: ");
+            printf("\n\t\t\t\t\tEnter Choice::: ");
             scanf("%d",&choice);
             if(choice==1){
                 system("CLS");
@@ -280,7 +281,7 @@ int option;
 train_information(){
 
         system("CLS");
-        printf("Available Route: \n\n\t 1.East Zone \n\t 2. West Zone \n\t 3. International Service \n\t 4. Back\n");
+        printf("Available Route: \n\n\t 1.East Zone \n\t 2. West Zone \n\t 3. International Service \n\t 4. Book Ticket \n\t 5. Back to Home\n");
         printf("Select Option: \n\n");
         int select;
         scanf("%d",&select);
@@ -377,13 +378,14 @@ train_information(){
                                         train_information();
                                     }
                         case 4:{
-                                        system("CLS");
                                         book_ticket();
                                     }
+                        case 5:{
+                                        home();
                         default:{
                                         train_information();
                                     }
-            }}}
+            }}}}
 coach_view(){
     system("CLS");
     coordinate(15,10);
@@ -396,7 +398,7 @@ coach_view(){
             case 1:{
 
                 printf("AC Snigdha\n\n");
-                printf("\t\t\tW01  C02\t\tW03  \n\t\t\tW03 C04\t\tW07  \n \t\t\tW08  C09\t\tW10 \n \t\t\tW11  C12\t\tW13 \n \t\t\tW14  C15\t\tW15 \n \t\t\tW16  C17\t\tW18\n");
+                printf("\t\t\tW01  C02\t\tW03  \n\t\t\tW03  C04\t\tW07  \n \t\t\tW08  C09\t\tW10 \n \t\t\tW11  C12\t\tW13 \n \t\t\tW14  C15\t\tW15 \n \t\t\tW16  C17\t\tW18\n");
                             printf("\n Press Any key to Go Back!\n");
                             getch();
                             coach_view();
@@ -599,9 +601,6 @@ home(){
 
     time_t t;
     time(&t);
-
-    printf("\n (date and time): %s", ctime(&t));
-
     system("CLS");
     coordinate(20,5);
      printf("\n");
@@ -794,7 +793,7 @@ admin_access(){
                    system("CLS");
                coordinate(15,10);
               printf("\n\t\t\t\t\t\t\tWelcome Admin!\n\t\t\t\t\t   You Have Successfully logged In!!!");
-              printf("\n\n\t\t\t\t\t\tSelect Option!\n\n\t 1. User Info Delete \n\t 2. Reservation Cancellation \n\t 3. Rename an Existing File \n\t 4. Train Information Update \n\t 5. Coach View Update \n\t 6. Authorize Saloon Coach Application \n\n\t 7. Exit\n\n");
+              printf("\n\n\t\t\t\t\t\tSelect Option!\n\n\t 1. User Info Delete \n\t 2. Reservation Cancellation \n\t 3. Rename an Existing File \n\t 4. Train Information Update \n\t 5. Coach View Update \n\t 6. Authorize Saloon Coach Application \n\n\t 7. Go back to Main Menu \n\t 8. Exit\n\n");
                     int option;
                     printf("\n\n\t\t\t\t\t\t Enter Your Option: ");
                     scanf("%d",&option);
@@ -834,7 +833,7 @@ admin_access(){
                                 printf("\n\n\t\t\tPress Any key to GO Back!\n");
                                 getch();
                                     system("CLS");
-                                    admin_access();
+                                    goto jump;
                                 }
                                 else{
 
@@ -904,6 +903,10 @@ admin_access(){
                                                     }
                                                     else if(option==7)
                                                     {
+                                                        main();
+                                                    }
+                                                    else if(option==8)
+                                                    {
                                                         exit(0);
                                                     }
                                                     else{
@@ -943,10 +946,8 @@ int main(){
     printf("\n\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**");
     printf("\n\t\t\t        #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#");
     printf("\n\t\t\t        #                                           #");
-    printf("\n\t\t\t        #                  WELCOME                  #");
-    printf("\n\t\t\t        #                    TO                     #");
-    printf("\n\t\t\t        #             Railway Ticketing             #");
-    printf("\n\t\t\t        #                  SYSTEM                   #");
+    printf("\n\t\t\t        #                WELCOME  TO                #");
+    printf("\n\t\t\t        #         Railway Ticketing SYSTEM          #");
     printf("\n\t\t\t        #                                           #");
     printf("\n\t\t\t        #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#");
     printf("\n\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**\n");
@@ -1022,9 +1023,10 @@ case 1:
 }
     case 2:
         {
-            printf("\n\nSelect Option \n\n\t 01. Admin Access \n\n\t 02. Go Back\n");
+            printf("\n\n\n\n\t\t\t\tSelect Option \n\n\t\t\t\t 01. Admin Access \n\t\t\t\t 02. Go Back\n");
+
             int back;
-            printf("Enter your option:  ");
+            printf("\n\t\t\t\tEnter your option:  ");
             scanf("%d",&back);
             switch(back)
             {
