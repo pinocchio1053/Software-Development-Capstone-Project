@@ -6,14 +6,7 @@
 #include <windows.h>
 #include <dos.h>
 #include <errno.h>
-
-void coordinate(int x, int y) {
-    COORD CRD;
-    CRD.X= x;
-    CRD.Y= y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),CRD);
-}
-struct data {
+struct data{
     char name[32];
     char ID[16];
     char number[16];
@@ -22,31 +15,90 @@ struct data {
     char password[32];
     };
     typedef struct data Sdata;
-
 struct reservation{
     char journey_date[16];
+    char trainname[16];
     char boarding[16];
     char departure [16];
     char total_seat[16];
+    char seat_type[16];
     char select_seat[16];
     char passenger_name[32];
     };
     typedef struct reservation Sreserve;
+void coordinate(int x, int y){
+    COORD CRD;
+    CRD.X= x;
+    CRD.Y= y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),CRD);
+}
+loader(){
+    int i;
+    system("CLS");
+    coordinate(15,5);
 
-login() {
+    printf("\n\n\n\n\t\t\tLoading...\n");
+    printf("\t");
+    for(i=0;i<50;i++)
+    {
+        Sleep(20);
+        printf("%c",219);
+    }
+    system("cls");
+    coordinate(15,5);
+    printf("\n\tPlease Press Any key to Continue!\n\n");
+    getch();
+    system("CLS");
+}
+about_us(){
+
+
+    printf("\n                                                    **************\n");
+    printf("                                                       Welcome!");
+    printf("\n                                                    **************\n");
+
+    printf("               ||-------------------------------------------------------------------------------------||\n");
+    printf("               ||-------------------------------------------------------------------------------------||\n");
+    printf("               ||                                                                                     ||\n");
+    printf("               ||           Project Name: SE-133 Software Development Capstone Project(K).            ||\n");
+    printf("               ||           Project Title: Ticketing BR                                               ||\n");
+     printf("               ||                                                                                     ||\n");
+    printf("               ||           Project Instructor:                                                       ||\n               ||\t\tMR. BIRAJ SAHA ARONYA, Lecturer, Dept. of SWE, DIU                    ||\n");
+     printf("               ||                                                                                     ||\n");
+    printf("               ||           Project Partners:                                                         ||\n               ||\t\t GOLAM AHMED MUGDHA 221-35-1053 (System Architect & Developer)        ||\n               ||\t\t MOST. NUSRAT FATEMA 221-35-1059 (System Designer & Testing)          ||\n");
+     printf("               ||                                                                                     ||\n");
+    printf("               ||    This project is a visualization of a large arrangement of management system      ||\n               ||        that maintains  the e-ticketing & services of BANGLADESH RAILWAY.            ||\n");
+    printf("               ||      As for language criteria, we could not cover some of our desired features,     ||\n               ||       but we have tried our best to use every corner of our Programming Skill.      ||\n");
+    printf("               ||                        © Both the partners keep the copyright.                      ||\n");
+    printf("               ||                                                                                     ||\n");
+    printf("               ||                        ***Press Any Key to Go back to Home Page***                  ||\n");
+    printf("               ||-------------------------------------------------------------------------------------||\n");
+    printf("               ||-------------------------------------------------------------------------------------||\n");
+
+                getchar();
+        system("CLS");
+               main();
+
+}
+login(){
         char username[30],password[20];
         FILE *data;
         Sdata create;
         data=fopen("data.txt","r");
 
-    coordinate(20,1);
-    printf("\nPlease Enter your login Details below\n\n");
-    printf("Username:  ");
+    coordinate(20,5);
+    printf("\n");
+     printf("\n\t\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**");
+     printf("\n\t\t\t\t     Please Enter your login Details below ");
+     printf("\n\t\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**\n");
+
+    printf("\n\t\t\t\t\tUsername:  ");
     scanf("%s",&username);
-    printf("\nPassword: ");
+    printf("\n\t\t\t\t\tPassword: ");
     scanf("%s",&password);
 
     if (NULL == data) {
+            loader();
         printf("\n\nNo Information Available!\n Create an Account!\n");
         printf("Press Any Key to Go Main Menu!\n");
         getch();
@@ -55,7 +107,10 @@ login() {
 while(fread(&create,sizeof(create),1,data)){
     if(strcmp(username,create.user_name)==0 && strcmp(password,create.password)==0)
         {
+            loader();
             printf("\nSuccessful Login\n");
+            printf("Press Any Key to go to HOME!\n");
+            getch();
             home();
             break;
         }
@@ -78,8 +133,6 @@ while(fread(&create,sizeof(create),1,data)){
 }
     fclose(data);
 }
-
-
 profile_information(){
     FILE *data;
     Sdata create;
@@ -88,10 +141,12 @@ profile_information(){
         fread(&create,sizeof(create),1,data);
 
 
-    if (NULL == data) {
+    if (NULL == data){
         printf("No Information Available!\n Create an Account!\n");
         main();
     }
+
+        loader();
 
     printf("Your Information::: \n");
 
@@ -109,7 +164,6 @@ profile_information(){
         system("CLS");
         home();
     }
-
 update_profile(){
     char name[32];
     FILE *data;
@@ -159,6 +213,7 @@ system("CLS");
     coordinate(15,5);
 
     printf("\n");
+    loader();
      printf("\n\t\t\t\t\tYour Updated Information:    ");
 
         printf("\n\n\t\t\t *******************************************\n");
@@ -222,13 +277,152 @@ int option;
     coordinate(15,5);
             home();
     }}
+train_information(){
 
+        system("CLS");
+        printf("Available Route: \n\n\t 1.East Zone \n\t 2. West Zone \n\t 3. International Service \n\t 4. Back\n");
+        printf("Select Option: \n\n");
+        int select;
+        scanf("%d",&select);
+
+        switch(select){
+
+        case 1:{
+                printf("East Zone Available Train Details:\n\n");
+                printf("\t 1. Dhaka - Rangpur - Dhaka \n\t 2. Dhaka - Saidpur - Dhaka \n\t 3. Dhaka - Mymensingh - Jamalpur - Dhaka \n\t 4. Dhaka - Rajshahi - Dhaka \n\t 5. Dhaka - Khulna - Dhaka \n\t 6. Back\n\n");
+
+                    int option_e;
+                    printf("Enter Route: ");
+                    scanf("%d",&option_e);
+                        switch(option_e){
+
+                                    case 1:{
+                                        loader();
+                                        printf("\n\t 1. 751 Up::: Rangpur Express (Dhaka - Rangpur) \n\t 2. 752 Down::: Rangpur Express (Rangpur - Dhaka)\n\t");
+                                        printf("\n\n\tPress Any Key to Go Back!\n");
+                                        getch();
+                                        train_information();
+                                    }
+                                    case 2:{
+                                         loader();
+                                        printf("\n\t 1. 765 Up::: Nilsagar Express (Dhaka - Saidpur) \n\t 2. 766 Down::: Nilsagar Express (Saidpur - Dhaka)\n\t");
+                                        printf("\n\n\tPress Any Key to Go Back!\n");
+                                        getch();
+                                        train_information();
+                                    }
+                                    case 3:{
+                                         loader();
+                                        printf("\n\t 1. 765 Up::: Jamalpur Express (Dhaka - Jamalpur) \n\t 2. 800 Down::: Jamalpur Express (Jamalpur - Dhaka)\n\t");
+                                        printf("\n\n\tPress Any Key to Go Back!\n");
+                                        getch();
+                                        train_information();
+                                    }
+                                    case 4:{
+                                         loader();
+                                        printf("\n\t Up::: \n\t 753 Up::: SilkCity Express (Dhaka - Rajshahi) \n\t 759 Up::: Padma Express (Dhaka - Rajshahi) \n\t 769 Up::: Dhumketu Express (Dhaka - Rajshahi) \n\n\t Down::: \n\t 754 Down::: SilkCity Express (Rajshahi - Dhaka) \n\t 760 Down::: Padma Express (Rajshahi - Dhaka) \n\t 770 Down::: Dhumketu Express (Rajshahi - Dhaka)\n\t");
+                                        printf("\n\n\tPress Any Key to Go Back!\n");
+                                        getch();
+                                        train_information();
+                                    }
+                                    case 5:{
+                                         loader();
+                                        printf("\n\t 1. 747 Up::: Simanta Express (Dhaka - Khulna) \n\t 2. 748 Down::: Simanta Express (Khulna - Dhaka)\n\t");
+                                        printf("\n\n\tPress Any Key to Go Back!\n");
+                                        getch();
+                                        train_information();
+                                    }
+                                    case 6:{
+                                        train_information();
+                                    }
+
+                                    }
+                        }
+                        case 2:{
+
+                            printf("West Zone Available Train Details:\n\n");
+                                printf("\t 1. Dhaka - Sylhet - Dhaka \n\t 2. Dhaka - Chittagong - Dhaka \n\t 3. Back to Ticketing\n\n");
+
+                                    int option_w;
+                                    printf("Enter Route: ");
+                                    scanf("%d",&option_w);
+                                    switch(option_w){
+
+                                            case 1:{
+                                             loader();
+                                                printf("\n\t Up::: \n\t 773 Up::: Kalni Express (Dhaka - Sylhet) \n\t 709 Up::: Parabat Express (Dhaka - Sylhet) \n\t 717 Up:::Jointika Express (Dhaka - Sylhet) \n\n\t Down::: \n\t 774 Down::: Kalni Express (Sylhet - Dhaka) \n\t 710 Down ::: Parabat Express (Sylhet - Dhaka) \n\t 718 Down:::Jointika Express (Sylhet - Dhaka)\n\t");
+                                                printf("\n\n\tPress Any Key to Go Back!\n");
+                                                getch();
+                                                train_information();
+                                    }
+
+                                    case 2:{
+                                         loader();
+                                        printf("\n\t Up::: \n\t 788 Up::: Sonar Bangla Express (Dhaka - Chittagong) \n\t 702 Up::: Suborno Express (Dhaka - Chittagong) \n\t 742 Up::: Turna Express (Dhaka - Chittagong) \n\t Down::: 789 Down::: Sonar Bangla Express (Chittagong - Dhaka) \n\t 703 Down::: Suborno Express (Chittagong - Dhaka) \n\t 742 Down::: Turna Express (Chittagong - Dhaka)\n\t");
+                                        printf("\n\n\tPress Any Key to Go Back!\n");
+                                        getch();
+                                        train_information();
+                                    }
+                                    case 3:{
+                                        train_information();
+                                    }
+                                    default:
+                                        train_information();
+                                    }
+                        case 3:{
+                                        loader();
+                                         printf("International Route Available Train Details:\n\n");
+                                        printf("\n\t 1. BR13108 Up::: Maitree Express (Dhaka - Kalkata - Jolpaiguri) \n\t 2. IR 13109 Down::: Maitree Express (Jolpaiguri - Kaltaka - Dhaka)\n\t");
+                                        printf("\n\n\tPress Any Key to Go Back!\n");
+                                        getch();
+                                        train_information();
+                                    }
+                        case 4:{
+                                        system("CLS");
+                                        book_ticket();
+                                    }
+                        default:{
+                                        train_information();
+                                    }
+            }}}
 coach_view(){
     system("CLS");
-    printf(" AC Coach View: \n\n");
-    printf("\t\t\tW01  C02\t\tC03  W04\n \t\t\tW05  C06\t\tC07  W08\n \t\t\tW09  C10\t\tC11  W12\n \t\t\tW13  C14\t\tC15  W16\n \t\t\tW17  C18\t\tC19  W20\n");
-    }
+    coordinate(15,10);
+    printf("\n Select Option:  \n\t 1. Snigdha \n\t 2. Shovon \n\t 3. Saloon Coach (VVIP / VIP / General) \n\t 4. Back to Home\n");
+    int selection;
+    scanf("%d",&selection);
 
+            switch(selection){
+
+            case 1:{
+
+                printf("AC Snigdha\n\n");
+                printf("\t\t\tW01  C02\t\tW03  \n\t\t\tW03 C04\t\tW07  \n \t\t\tW08  C09\t\tW10 \n \t\t\tW11  C12\t\tW13 \n \t\t\tW14  C15\t\tW15 \n \t\t\tW16  C17\t\tW18\n");
+                            printf("\n Press Any key to Go Back!\n");
+                            getch();
+                            coach_view();
+            }
+            case 2:{
+
+                printf("Schovon Chair\n\n");
+                printf("\t\t\tW01  C02\t\tC03  W04\n \t\t\tW05  C06\t\tC07  W08\n \t\t\tW09  C10\t\tC11  W12\n \t\t\tW13  C14\t\tC15  W16\n \t\t\tW17  C18\t\tC19  W20\n");
+                            printf("\n Press Any key to Go Back!\n");
+                            getch();
+                            coach_view();
+            }
+            case 3:{
+
+                printf("Apply to Authority for Saloon Coach Service\n\n");
+                            printf("\n Press Any key to Go Back!\n");
+                            getch();
+                            coach_view();
+            }
+            case 4:{
+            printf("\n Press Any key to Go to Home!\n");
+                            getch();
+                            home();
+            }
+            }
+    }
 book_ticket(){
 
     FILE *bookings;
@@ -243,10 +437,18 @@ book_ticket(){
      printf("\n\t\t\t               Please Fill the Information Below");
      printf("\n\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**");
 
+     printf("\n\n Press Any Key to Continue!\n");
+     getch();
+     system("CLS");
+
+
      fgetc(stdin);
     printf("\n\n\t\t\t\tEnter Your journey Date:::");
     fgets(book.journey_date,16,stdin);
     book.journey_date[strlen(book.journey_date)-1]=0;
+    printf("\n\n\t\t\t\tEnter Your Selected Train Code:::");
+    fgets(book.trainname,16,stdin);
+    book.trainname[strlen(book.trainname)-1]=0;
     printf("\n\n\t\t\t\tEnter Your Boarding Point:::");
     fgets(book.boarding,16,stdin);
     book.boarding[strlen(book.boarding)-1]=0;
@@ -256,12 +458,9 @@ book_ticket(){
     printf("\n\n\t\t\t\tEnter How Many Seats You Want to Reserve::: ");
     fgets(book.total_seat,16,stdin);
     book.total_seat[strlen(book.total_seat)-1]=0;
-
-
-    system("CLS");
-    coordinate(15,5);
-    coach_view();
-
+    printf("\n\n\t\t\t\tEnter Seat Type:");
+    fgets(book.seat_type,16,stdin);
+    book.seat_type[strlen(book.seat_type)-1]=0;
     printf("\n\n\t\t\t\tEnter Seats you Selected:");
     fgets(book.select_seat,16,stdin);
     book.select_seat[strlen(book.select_seat)-1]=0;
@@ -272,18 +471,24 @@ book_ticket(){
     fwrite(&book,sizeof(book),1,bookings);
     fclose(bookings);
 
+    loader();
+
     printf("\n");
      printf("\n\t\t\t\t\tYour Ticketing Information:    ");
 
         printf("\n\n\t\t\t *******************************************\n");
         printf("\n\t\t\t            Journey Date: ");
         puts(book.journey_date);
+        printf("\n\t\t\t            Train Code: ");
+        puts(book.trainname);
         printf("\n\t\t\t            Boarding Point: ");
         puts(book.boarding);
         printf("\n\t\t\t            Departure Point: ");
         puts(book.departure);
         printf("\n\t\t\t            Total Seat: ");
         puts(book.total_seat);
+        printf("\n\t\t\t            Seat Type: ");
+        puts(book.seat_type);
         printf("\n\t\t\t            Selected Seat: ");
         puts(book.select_seat);
         printf("\n\t\t\t            Passenger Name: ");
@@ -303,6 +508,8 @@ int option;
     system("CLS");
     coordinate(15,5);
 
+    loader();
+
     printf("\n");
     printf("\n\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-****-**-**");
     printf("\n\t\t\t        #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#");
@@ -320,7 +527,27 @@ int option;
             coordinate(15,10);
             home();
 }}
+food_details(){
 
+    system("CLS");
+    coordinate(15,10);
+
+         printf("\n                               ****************************************************************\n");
+    printf("                               *                  Welcome to BR FOOD Gallery!                 *\n");
+    printf("                               *            List of Foods Available in Your Journey           *\n");
+    printf("                               ****************************************************************\n");
+
+
+                            printf("\n\t\t\t\tLunch Packages::: \n\t\t\t\t\t 01. Plain Rice - Fish Curry - Vegetable Salad (BDT200) \n\t\t\t\t\t 02. Plain Polao - Chicken Roast - Daal (BDT180) \n\t\t\t\t\t 03. Chiken Biriyani (BDT160)\n");
+
+                            printf("\t\t\t\tSnacks::: \n\t\t\t\t\t 01. Crackers (BDT 20) \n\t\t\t\t\t 02. Sandwich (BDT60) \n\t\t\t\t\t 03. Chicken Sub- Burger (BDT120) \n\t\t\t\t\t 04. Chicken Fry(BDT90) \n\t\t\t\t\t 05. Soft Drinks & Water(BDT20)");
+
+                            printf("\n\n\n \t\t\t\t\tPress Any key to Go to Home!\n");
+
+                            getch();
+                            home();
+
+            }
 cancel_reservation(){
             system("CLS");
             coordinate(15,10);
@@ -330,7 +557,6 @@ cancel_reservation(){
             system("CLS");
         home();
 }
-
 check_trip(){
     FILE *bookings;
     Sreserve book;
@@ -352,6 +578,7 @@ check_trip(){
                 home();
             }}
 
+            loader();
     printf("Your Information::: \n");
 
     printf("Journey Date:::  %s\n",book.journey_date);
@@ -368,44 +595,60 @@ check_trip(){
         system("CLS");
         home();
     }
-
-
 home(){
-    printf("Hello User!\n");
-    printf("Please Select the Option: \n\n \t 1.See Profile Information\n\t\ 2.Update Profile\n\t 3.Book Ticket\n\t 4.Cancel Reservation\n\t 5.Check Your Trip \n\t 6. Main Menu \n\t 7. Exit\n\n");
+
+    time_t t;
+    time(&t);
+
+    printf("\n (date and time): %s", ctime(&t));
+
+    system("CLS");
+    coordinate(20,5);
+     printf("\n");
+     printf("\n\t\t\t\t\t  **-**-**-**-**-**-**-**-**-**");
+     printf("\n\t\t\t\t\t           Hello User!         ");
+    printf("\n\t\t\t\t\t     %s", ctime(&t));
+     printf("\n\t\t\t\t\t  **-**-**-**-**-**-**-**-**-**\n");
+
+    printf("\n\t\t\t\t\t    Please Select the Option: \n\n \t\t\t\t\t    01. Train Information \n\t\t\t\t\t    02. Coach View \n\t\t\t\t\t    03. Book Ticket \n\t\t\t\t\t    04. Check Your Trip \n\t\t\t\t\t    05. Cancel Reservation \n\t\t\t\t\t    06. See Profile Information \n\t\t\t\t\t    07. Update Profile\n\t\t\t\t\t    08. Food Gallery \n\t\t\t\t\t    09. Main Menu \n\t\t\t\t\t    10. Exit\n\n");
     int option;
+    printf("\n\t\t\t\t\t    Please Enter Your Option: ");
     scanf("%d",&option);
 
     switch(option){
 
 case 1:
-    profile_information();
+    train_information();
     break;
 case 2:
-    update_profile();
+    coach_view();
     break;
 case 3:
     book_ticket();
     break;
 case 4:
-    cancel_reservation();
-    break;
-case 5:
     check_trip();
     break;
+case 5:
+    cancel_reservation();
+    break;
 case 6:
-    main();
+    profile_information();
     break;
 case 7:
-    exit(0);
+    update_profile();
     break;
+case 8:
+    food_details();
+    break;
+case 9:
+    main();
+case 10:
+    exit(0);
 default:
     home();
     }
 }
-
-
-
 create_profile(){
 
     coordinate(15,5);
@@ -436,6 +679,8 @@ create_profile(){
 
     system("CLS");
     coordinate(15,5);
+
+    loader();
 
     printf("\n");
      printf("\n\t\t\t\t\tYour Information:    ");
@@ -490,6 +735,7 @@ int option;
 
 printf("\nRegistration Successful!\n");
 printf("Press 'ENTER' key to continue...");
+    loader();
 }
 else if(option==2){
     getchar();
@@ -515,7 +761,6 @@ system("CLS");
     coordinate(15,10);
     login();
     }}
-
 admin_access(){
 
     system("CLS");
@@ -540,15 +785,16 @@ admin_access(){
        printf("\t\t\t\t\t=======================================");
        printf("\n\t\t\t\t\t  Enter Admin Password: ");
        scanf("%s",&password);
-       if(strcmp(u_name,"mugdha")==0)
+       if(strcmp(u_name,"mugnus")==0)
        {
            if(strcmp(password,"110010")==0)
            {
+               loader();
                jump:
                    system("CLS");
                coordinate(15,10);
               printf("\n\t\t\t\t\t\t\tWelcome Admin!\n\t\t\t\t\t   You Have Successfully logged In!!!");
-              printf("\n\n\t\t\t\t\t\tSelect Option!\n\n\t 1. User Info Delete \n\n\t 2. Reservation Cancellation \n\n\t 3. Rename an Existing File \n\n\t 4. Exit\n\n");
+              printf("\n\n\t\t\t\t\t\tSelect Option!\n\n\t 1. User Info Delete \n\t 2. Reservation Cancellation \n\t 3. Rename an Existing File \n\t 4. Train Information Update \n\t 5. Coach View Update \n\t 6. Authorize Saloon Coach Application \n\n\t 7. Exit\n\n");
                     int option;
                     printf("\n\n\t\t\t\t\t\t Enter Your Option: ");
                     scanf("%d",&option);
@@ -573,6 +819,7 @@ admin_access(){
 
                     }
                     else if(option==2){
+                            loader();
                             system("CLS");
                             coordinate(15,10);
                                                 char delete_book[100];
@@ -600,6 +847,7 @@ admin_access(){
                                 }
 
                         else if(option == 3){
+                                loader();
                                 system("CLS");
                                 coordinate(15,10);
 
@@ -627,7 +875,34 @@ admin_access(){
                                                                                     }
 
     }
-                                                    else if(option==4)
+                                                    else if(option==4){
+
+                                                            system("CLS");
+                                                            coordinate(15,10);
+                                                            printf("Contact Your Developer to Update Train Information\n");
+                                                            printf("\t\tPress Any key to GO Back!\n");
+                                                                                        getch();
+                                                                                        goto jump;
+                                                    }
+                                                    else if(option==5){
+
+                                                            system("CLS");
+                                                            coordinate(15,10);
+                                                            printf("Contact Your Developer to Update Coach View\n");
+                                                            printf("\t\tPress Any key to GO Back!\n");
+                                                                                        getch();
+                                                                                        goto jump;
+                                                    }
+                                                    else if(option==6){
+
+                                                            system("CLS");
+                                                            coordinate(15,10);
+                                                            printf("Contact Your Developer to Update This Feature\n");
+                                                            printf("\t\tPress Any key to GO Back!\n");
+                                                                                        getch();
+                                                                                        goto jump;
+                                                    }
+                                                    else if(option==7)
                                                     {
                                                         exit(0);
                                                     }
@@ -659,11 +934,11 @@ admin_access(){
                                                             admin_access();
             }
 }
-
 int main(){
 
         system("COLOR 70");
 
+        coordinate(20,5);
         printf("\n\n\n\n\n");
     printf("\n\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**");
     printf("\n\t\t\t        #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#");
@@ -675,13 +950,12 @@ int main(){
     printf("\n\t\t\t        #                                           #");
     printf("\n\t\t\t        #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#");
     printf("\n\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**\n");
-    printf("\n\n\n\t\t\t Enter any key to continue.....");
+    printf("\t\t\t\t Enter any key to continue.....");
     getchar();
         system("CLS");
 
         int choice,option;
-        coordinate(15,10);
-
+        coordinate(20,5);
 
         printf("\n");
     printf("\n\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**");
@@ -694,12 +968,12 @@ int main(){
     printf("\n\t\t\t        #                                           #");
     printf("\n\t\t\t        #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#");
     printf("\n\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**\n");
-    printf("\n\t\t\t Enter Your option to continue.....");
+    printf("\n\t\t\t\t Enter Your option to continue.....");
         scanf("%d",&choice);
 
         getchar();
         system("CLS");
-        coordinate(15,10);
+        coordinate(20,5);
 switch(choice){
 case 1:
     {
@@ -714,7 +988,7 @@ case 1:
     printf("\n\t\t\t        #                                           #");
     printf("\n\t\t\t        #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#");
     printf("\n\t\t\t  **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**");
-    printf("\nt\t\t Enter Your option to continue.....");
+    printf("\n\t\t\t\t Enter Your option to continue.....");
     scanf("%d",&option);
     switch(option)
     {
@@ -766,14 +1040,14 @@ case 1:
         }
         case 3:
             {
-                printf("About Loading...........\n");
-                printf("Press Any Key to Go back to Home Page\n");
-                getchar();
-        system("CLS");
-               main();
+                about_us();
                break;
             }
 
     default:
-        printf("Wrong Option!");
+        printf("Wrong Option!\n");
+        printf("\t\t\tPress Any Key to Go Back!");
+        getchar();
+        system("CLS");
+        main();
     }}
